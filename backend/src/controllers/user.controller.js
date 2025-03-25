@@ -458,7 +458,7 @@ export async function resetPasswordController(req, res) {
 export async function refreshTokenController(req, res) {
   try {
     const refreshToken =
-      req.cookies.refreshToken || req?.header?.authorization?.split(" ")[1];
+      req.cookies.refreshToken || req?.headers?.authorization?.split(" ")[1];
 
     if (!refreshToken) {
       return res.status(401).json({

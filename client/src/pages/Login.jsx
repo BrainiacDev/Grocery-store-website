@@ -6,6 +6,9 @@ import Axios from "../utils/axios";
 import SummaryApi from "../common/summaryApi";
 import AxiosToastError from "../utils/axiosToastError";
 import { Link, useNavigate } from "react-router-dom";
+import fetchUserDetails from "../utils/fetchUserDetails";
+import { useDispatch } from "react-redux";
+import { setUserDetails } from "../store/userSlice";
 
 const Login = () => {
   const [data, setData] = useState({
@@ -15,6 +18,7 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
 
   const navigate = useNavigate();
+  const dispatch = useDispatch()
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -53,6 +57,10 @@ const Login = () => {
           "refreshToken",
           response.data.data.refreshToken
         );
+
+        const userDetail = await fetchUserDetails()
+        dispatch(setUserDetails(userDetail.data))
+
         setData({
           email: "",
           password: "",

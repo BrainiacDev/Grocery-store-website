@@ -1,27 +1,40 @@
-import React from "react";
+import React, { useState } from "react";
 import logo from "../assets/logo.png";
 import Search from "./Search";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FaRegCircleUser } from "react-icons/fa6";
-import {BsCart4} from "react-icons/bs";
+import { BsCart4 } from "react-icons/bs";
+import { GoTriangleDown, GoTriangleUp } from "react-icons/go";
 import useMobile from "../hooks/useMobileHook";
 import { useSelector } from "react-redux";
+import UsersMenu from "./UsersMenu";
 
 const Header = () => {
   const [isMobile] = useMobile();
   const location = useLocation();
   const isSearchPage = location.pathname === "/search";
   const navigate = useNavigate();
-  const user = useSelector((state) => state.user)
-  
-  console.log("User from store", user)
+  const user = useSelector((state) => state.user);
+  const [openUserMenu, setOpenUserMenu] = useState(false);
+
+  console.log("User from store", user);
 
   const redirectToLoginPage = () => {
     // Redirect to login page
     navigate("/login");
-  }
+  };
 
+  const handleCloseUserMenu = () => {
+    setOpenUserMenu(false);
+  };
 
+  const handleMobileUser = () => {
+    if (!user._id) {
+      navigate("/login");
+      return;
+    }
+    navigate("/user")
+  };
 
   return (
     <header className="h-24 lg:h-20 lg:shadow-md sticky top-0 flex flex-col justify-center gap-1 bg-white">
@@ -56,16 +69,45 @@ const Header = () => {
           <div className="">
             {/* User icons display in mobile only */}
             <div>
-              <button className="text-neutral-600 lg:hidden">
+              <button
+                className="text-neutral-600 lg:hidden"
+                onClick={handleMobileUser}
+              >
                 <FaRegCircleUser size={25} />
               </button>
             </div>
 
             {/* Desktop */}
             <div className="hidden lg:flex items-center gap-10">
-              <button onClick={redirectToLoginPage} className="text-lg px-2 cursor-pointer">
-                Login
-              </button>
+              {user?._id ? (
+                <div className="relative">
+                  <div
+                    onClick={() => setOpenUserMenu((preve) => !preve)}
+                    className="flex select-none items-center gap-1 cursor-pointer"
+                  >
+                    <p>Account</p>
+                    {openUserMenu ? (
+                      <GoTriangleUp size={25} />
+                    ) : (
+                      <GoTriangleDown size={25} />
+                    )}
+                  </div>
+                  {openUserMenu && (
+                    <div className="absolute right-0 top-12 lg:shadow-lg">
+                      <div className="bg-white rounded p-4 min-w-52">
+                        <UsersMenu close={handleCloseUserMenu} />
+                      </div>
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <button
+                  onClick={redirectToLoginPage}
+                  className="text-lg px-2 cursor-pointer"
+                >
+                  Login
+                </button>
+              )}
               <button className="flex items-center gap-2 bg-green-800 hover:bg-green-700 px-3 py-3 rounded cursor-pointer text-white">
                 {/* add to cart icon */}
                 <div className="animate-bounce">

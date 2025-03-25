@@ -2,13 +2,12 @@ import jwt from "jsonwebtoken";
 
 const auth = (req, res, next) => {
   try {
-    // const token =
-    //       req.cookies.accessToken || req.header?.authorization?.split(" ")[1]; //["Bearer", "token"]
-        const token =
-      req.cookies?.accessToken ||
-      (req.header("Authorization")?.startsWith("Bearer ")
-        ? req.header("Authorization").split(" ")[1]
-              : null);
+    const token = req.cookies.accessToken || req.headers?.authorization?.split(" ")[1]; //["Bearer", "token"]
+      //   const token =
+      // req.cookies?.accessToken ||
+      // (req.header("Authorization")?.startsWith("Bearer ")
+      //   ? req.header("Authorization").split(" ")[1]
+      //         : null);
       
     console.log("token", token);
 

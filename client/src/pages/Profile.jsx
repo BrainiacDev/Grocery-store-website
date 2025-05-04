@@ -1,6 +1,7 @@
 import React from "react";
 import { FaRegUserCircle } from "react-icons/fa";
 import { useSelector } from "react-redux";
+import UserProfileAvatarEdit from "../components/UserProfileAvatarEdit";
 
 const Profile = () => {
   const user = useSelector((state) => state.user);
@@ -17,7 +18,9 @@ const Profile = () => {
       </div>
       <button className="text-xs border min-w-20 px-3 py-1 rounded-full mt-3 border-[#ffc929] hover:border-[#ffbf00] hover:bg-[#ffbf00] cursor-pointer">
         Edit
-      </button>
+          </button>
+          
+          <UserProfileAvatarEdit/>
     </div>
   );
 };

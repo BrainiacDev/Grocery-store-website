@@ -16,10 +16,10 @@ const OtpVerification = () => {
     console.log("Location", location)
 
     useEffect(() => {
-        if (!location?.state?.email) {
-            navigate("/forgot-password")
-        }
-    },[])
+      if (!location?.state?.email) {
+        navigate("/forgot-password");
+      }
+    }, [location?.state?.email, navigate]);
 
   const validValue = data.every((el) => el);
 

@@ -381,6 +381,7 @@ export async function verifyForgotPasswordOTPController(req, res) {
     }
 
     //If OTP is not expired and is correct
+    // otp === user.forgot_password_otp
 
     const updateUser = await UserModel.findByIdAndUpdate(user?._id, {
       forgot_password_otp: "",

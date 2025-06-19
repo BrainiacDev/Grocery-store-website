@@ -16,7 +16,7 @@ export async function registerUserController(req, res) {
 
     if (!name || !email || !password) {
       return res.status(400).json({
-        message: "Provide name, email, password",
+        message: "Provide name, email and password",
         error: true,
         success: false,
       });
@@ -233,6 +233,8 @@ export async function uploadAvatarController(req, res) {
 
     return res.json({
       message: "Upload profile successfully",
+      success: true,
+      error: false,
       data: {
         _id: userId,
         avatar: upload.url,
@@ -271,7 +273,7 @@ export async function updateUserDetailsController(req, res) {
     );
 
     return res.json({
-      message: "User updated successfully",
+      message: "Updated successfully",
       error: false,
       success: true,
       data: updateUser,
